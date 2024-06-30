@@ -8,6 +8,29 @@ def guardar_como_txt(datos, filepath):
         for item in datos:
             f.write(f"{json.dumps(item)}\n")
 
+
+def descargar_equipos_desde_api(url):
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        return None
+
+def descargar_estadios_desde_api(url):
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        return None
+
+def descargar_partidos_desde_api(url):
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        return None
+    
+
 def cargar_datos_iniciales():
     """Cargar datos desde la API y guardarlos en archivos .txt."""
     api_urls = {
