@@ -1,7 +1,5 @@
-
 import sys
 import os
-from datetime import datetime
 
 # Añadir el directorio 'modules' al path de Python
 sys.path.append(os.path.join(os.path.dirname(__file__), 'modules'))
@@ -25,28 +23,17 @@ if __name__ == "__main__":
     client_controller = ClientController()
     product_controller = ProductController()
     restaurant_sale_controller = RestaurantSaleController(product_controller)
-    statistics_controller = StatisticsController()
+    statistics_controller = StatisticsController(match_controller, ticket_controller, client_controller, restaurant_sale_controller)
 
     # Cargar datos iniciales desde la API
     cargar_datos_iniciales(team_controller, stadium_controller, match_controller)
 
-    # Ejemplo de agregar productos al restaurante
-    product_controller.add_product("Hamburguesa", "Comida", 5.99, is_packaged=False)
-    product_controller.add_product("Cerveza", "Bebida", 2.99, is_alcoholic=True)
-    product_controller.add_product("Refresco", "Bebida", 1.49, is_alcoholic=False)
-    
-    # Ejemplo de venta de productos en el restaurante
-    client = client_controller.add_client("Juan Perez", "12345678", 30)
-    sale = restaurant_sale_controller.sell_product(client, "Hamburguesa", 2)
-    if isinstance(sale, dict):
-        print(f"\nVenta exitosa: Cliente {sale['client'].name}, Producto {sale['product'].name}, Cantidad {sale['quantity']}, Precio total {sale['total_price']}")
-    else:
-        print(f"\nVenta fallida: {sale}")
-    
-    # Intento de venta de producto alcohólico a menor de edad
-    underage_client = client_controller.add_client("Pedro Gomez", "87654321", 17)
-    sale = restaurant_sale_controller.sell_product(underage_client, "Cerveza", 1)
-    if isinstance(sale, dict):
-        print(f"\nVenta exitosa: Cliente {sale['client'].name}, Producto {sale['product'].name}, Cantidad {sale['quantity']}, Precio total {sale['total_price']}")
-    else:
-        print(f"\nVenta fallida: {sale}")
+    # Ejemplos de gestión de venta en restaurante
+    print("\nEjemplo de venta de producto en restaurante:")
+    restaurant_sale_controller.vender_producto("Juan Perez", "Hamburguesa", 2)
+
+    # Ejemplos de generación de reportes
+    print("\nEjemplo de generar reporte de ventas en restaurante:")
+    reporte_ventas = statistics_controller.generar_reporte_ventas()
+    for venta in reporte_ventas:
+        print(f"Cliente: {venta['cliente']}, Producto: {venta['producto']}, Cantidad: {venta['cantidad']}, Total: ${venta['total']:.2f}")
