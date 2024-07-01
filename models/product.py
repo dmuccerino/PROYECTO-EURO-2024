@@ -1,6 +1,4 @@
 
-# models/producto.py
-
 class Producto:
     def __init__(self, nombre, tipo, precio, es_alcoholica=False, es_empaque=False):
         self.nombre = nombre
