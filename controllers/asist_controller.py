@@ -1,20 +1,28 @@
 
 class AsistenciaController:
-    def __init__(self):
-        self.tickets = []  # Lista de todos los tickets
-
-    def registrar_ticket(self, ticket):
-        self.tickets.append(ticket)
-
-    def validar_ticket(self, codigo_unico):
-        for ticket in self.tickets:
-            if ticket.codigo_unico == codigo_unico:
-                if ticket.utilizado:
-                    print("El ticket ya ha sido utilizado.")
-                    return False
-                else:
-                    ticket.marcar_utilizado()
-                    print("ticket válido. Se ha registrado la asistencia.")
-                    return True
-        print("ticket no válido.")
+    @staticmethod
+    def validar_ticket(ticket, partidos):
+        for partido in partidos:
+            if partido == ticket.partido and not ticket.usado:
+                ticket.usado = True
+                partido.incrementar_asistencia()
+                return True
         return False
+    
+
+class PersistenciaController:
+    @staticmethod
+    def guardar_datos(filename, data):
+        with open(filename, 'w') as file:
+            for item in data:
+                file.write(str(item) + '\n')
+
+    @staticmethod
+    def cargar_datos(filename):
+        data = []
+        with open(filename, 'r') as file:
+            for line in file:
+                data.append(eval(line))
+        return data
+
+

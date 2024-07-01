@@ -10,10 +10,11 @@ class VentaTicketsController:
         self.ticket = []
         self.partidos = []  # Esta lista debería ser cargada desde los datos iniciales
 
-    def registrar_cliente(self, nombre, cedula, edad):
-        cliente = Cliente(nombre, cedula, edad)
-        self.clientes.append(cliente)
-        return cliente
+    @staticmethod
+    def registrar_cliente(nombre, cedula, edad):
+        # Crear instancia de Cliente con los datos proporcionados
+        nuevo_cliente = Cliente(nombre, cedula, edad)
+        return nuevo_cliente
 
     def mostrar_partidos(partidos):
         print("Partidos Disponibles:")

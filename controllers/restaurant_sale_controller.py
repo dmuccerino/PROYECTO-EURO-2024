@@ -1,9 +1,18 @@
 from models.product import Producto
+from models.restaurant import Restaurante
 from models.client import Cliente
 class RestaurantSaleController:
     def __init__(self, product_controller):
         self.product_controller = product_controller
         self.sales = []
+
+    @staticmethod
+    def inicializar_restaurante():
+        # Ejemplo de inicialización de restaurante y productos desde API o datos predefinidos
+        restaurante = Restaurante("Restaurante VIP", "Alemania")
+        restaurante.agregar_producto(Producto("Hamburguesa", "alimento", 10.0, es_empaque=True))
+        restaurante.agregar_producto(Producto("Cerveza", "bebida", 5.0, es_alcoholica=True))
+        return restaurante
 
 # Lista para simular los productos del restaurante
 productos_restaurante = [

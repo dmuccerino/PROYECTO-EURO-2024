@@ -48,15 +48,6 @@ def cargar_datos_iniciales():
     with open('data/matches.txt') as file:
         partidos_data = json.load(file)
 
-    equipos = [Team(e['name'], e['code'], e['group']) for e in equipos_data]
-    estadios = [Stadium(s['name'], s['city']) for s in estadios_data]
-
-    for partido in partidos_data:
-        equipo_local = next(e for e in equipos if e.code == partido['home'])
-        equipo_visitante = next(e for e in equipos if e.code == partido['away'])
-        estadio = next(s for s in estadios if s.nombre == partido['stadium'])
-        partido_obj = Match(equipo_local, equipo_visitante, partido['datetime'], estadio)
-        venta_tickets_controller.partidos.append(partido_obj)
 
 cargar_datos_iniciales()
 
@@ -99,6 +90,7 @@ def main():
             codigo_unico = input("Ingrese el código único del ticket: ")
             asistencia_controller.validar_ticket(codigo_unico)
         elif opcion == "5":
+            print("Hasta pronto")
             break
         else:
             print("Opción inválida.")
