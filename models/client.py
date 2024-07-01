@@ -1,6 +1,6 @@
 
 class Client:
-    def __init__(self, name, cedula, age):
+    def __init__(self, name, id_number, age):
         self.name = name
-        self.cedula = cedula
+        self.id_number = id_number
         self.age = age
