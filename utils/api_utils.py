@@ -1,4 +1,6 @@
 import requests
+import json
+from models import match
 from controllers.team_controller import TeamController
 from controllers.stadium_controller import StadiumController
 from controllers.match_controller import MatchController
@@ -29,3 +31,20 @@ def cargar_datos_iniciales():
         match_controller.agregar_partido(equipo_local, equipo_visitante, partido['fecha_hora'], estadio)
     
     return team_controller, stadium_controller, match_controller
+
+# Función para cargar datos de la API de partidos
+def cargar_partidos():
+    url = "https://raw.githubusercontent.com/Algoritmos-y-Programacion/api-proyecto/main/matches.json"
+    response = requests.get(url)
+    partidos_data = response.json()
+
+    partidos = []
+    for partido in partidos_data:
+        equipo_local = partido['local_team']
+        equipo_visitante = partido['visitor_team']
+        fecha_hora = partido['date_time']
+        estadio = partido['stadium']
+        partido_obj = partido(equipo_local, equipo_visitante, fecha_hora, estadio)
+        partidos.append(partido_obj)
+
+    return partidos

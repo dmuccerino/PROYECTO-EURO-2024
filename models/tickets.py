@@ -8,5 +8,26 @@ class Ticket:
         self.codigo_unico = codigo_unico
         self.utilizado = False
 
-    def marcar_utilizado(self):
-        self.utilizado = True
+tickets_emitidos = [
+    Ticket("ABCDE12345"),
+    Ticket("FGHIJ67890"),
+    Ticket("KLMNO54321")
+]
+
+# Función para validar la autenticidad del ticket
+def validar_ticket(codigo_ticket):
+    for ticket in tickets_emitidos:
+        if ticket.codigo == codigo_ticket:
+            if not ticket.usado:
+                ticket.usado = True
+                return True
+            else:
+                return False
+    return False
+
+# Función para actualizar la asistencia al partido
+def actualizar_asistencia(partido, codigo_ticket):
+    if validar_ticket(codigo_ticket):
+        print(f"¡ticket válido! Asistencia al partido de {partido.equipo_local} vs {partido.equipo_visitante} registrada.")
+    else:
+         print("Boleto inválido o ya utilizado.")
