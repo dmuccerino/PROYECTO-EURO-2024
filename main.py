@@ -52,8 +52,8 @@ def cargar_datos_iniciales():
     estadios = [Stadium(s['name'], s['city']) for s in estadios_data]
 
     for partido in partidos_data:
-        equipo_local = next(e for e in equipos if e.codigo_fifa == partido['home'])
-        equipo_visitante = next(e for e in equipos if e.codigo_fifa == partido['away'])
+        equipo_local = next(e for e in equipos if e.code == partido['home'])
+        equipo_visitante = next(e for e in equipos if e.code == partido['away'])
         estadio = next(s for s in estadios if s.nombre == partido['stadium'])
         partido_obj = Match(equipo_local, equipo_visitante, partido['datetime'], estadio)
         venta_tickets_controller.partidos.append(partido_obj)
