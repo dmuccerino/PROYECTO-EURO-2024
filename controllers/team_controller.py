@@ -1,8 +1,8 @@
 
 
-from models.teams import Team
+from models.team import Team
 
-from models.teams import Team
+from models.team import Team
 
 class TeamController:
     def __init__(self):

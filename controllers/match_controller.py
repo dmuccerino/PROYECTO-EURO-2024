@@ -5,7 +5,7 @@ class MatchController:
     def __init__(self):
         self.matches = []
 
-    def add_match(self, home_team, away_team, date, stadium):
+    def agregar_partido(self, home_team, away_team, date, stadium):
         match = Match(home_team, away_team, date, stadium)
         self.matches.append(match)
 

@@ -1,6 +1,6 @@
 import requests
-from teams import load_teams_from_api
-from stadiums import load_stadiums_from_api
+from models.team import load_teams_from_api
+from models.stadium import load_stadiums_from_api
 
 class Ticket:
     def __init__(self, cliente, partido, tipo_entrada, asiento, precio):

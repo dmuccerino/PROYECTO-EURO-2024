@@ -1,16 +1,22 @@
 
-from models.stadiums import Stadium
+from models.stadium import Stadium
 
 class StadiumController:
     def __init__(self):
         self.stadiums = []
 
-    def add_stadium(self, name, location):
-        stadium = Stadium(name, location)
-        self.stadiums.append(stadium)
+    def agregar_estadio(self, nombre, ubicacion):
+        estadio = Stadium(nombre, ubicacion)
+        self.stadiums.append(estadio)
 
-    def get_stadium(self, name):
-        for stadium in self.stadiums:
-            if stadium.name == name:
-                return stadium
+    def obtener_estadios(self):
+        return self.stadiums
+
+    def obtener_estadio_por_nombre(self, nombre):
+        for estadio in self.stadiums:
+            if estadio.nombre == nombre:
+                return estadio
         return None
+
+
+
