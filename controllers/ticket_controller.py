@@ -1,12 +1,12 @@
 import random
 import string
 from models.client import Cliente
-from models.tickets import Boleto
+from models.tickets import Ticket
 
 class VentaTicketsController:
     def __init__(self):
         self.clientes = []
-        self.boletos = []
+        self.ticket = []
         self.partidos = []  # Esta lista debería ser cargada desde los datos iniciales
 
     def registrar_cliente(self, nombre, cedula, edad):
