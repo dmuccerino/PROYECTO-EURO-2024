@@ -1,22 +1,38 @@
+
 import requests
 from controllers.team_controller import TeamController
 from controllers.stadium_controller import StadiumController
 from controllers.match_controller import MatchController
 
-def cargar_datos_iniciales(team_controller, stadium_controller, match_controller):
-    teams_url = "https://raw.githubusercontent.com/Algoritmos-y-Programacion/api-proyecto/main/teams.json"
-    stadiums_url = "https://raw.githubusercontent.com/Algoritmos-y-Programacion/api-proyecto/main/stadiums.json"
-    matches_url = "https://raw.githubusercontent.com/Algoritmos-y-Programacion/api-proyecto/main/matches.json"
+def cargar_datos_iniciales():
+    equipos_url = "https://raw.githubusercontent.com/Algoritmos-y-Programacion/api-proyecto/main/teams.json"
+    estadios_url = "https://raw.githubusercontent.com/Algoritmos-y-Programacion/api-proyecto/main/stadiums.json"
+    partidos_url = "https://raw.githubusercontent.com/Algoritmos-y-Programacion/api-proyecto/main/matches.json"
 
-    teams_data = requests.get(teams_url).json()
-    stadiums_data = requests.get(stadiums_url).json()
-    matches_data = requests.get(matches_url).json()
+    equipos_response = requests.get(equipos_url)
+    estadios_response = requests.get(estadios_url)
+    partidos_response = requests.get(partidos_url)
 
-    for team in teams_data:
-        team_controller.add_team(team['country'], team['fifa_code'], team['group'])
+    equipos = equipos_response.json()
+    estadios = estadios_response.json()
+    partidos = partidos_response.json()
 
-    for stadium in stadiums_data:
-        stadium_controller.add_stadium(stadium['name'], stadium['location'])
+    team_controller = TeamController()
+    stadium_controller = StadiumController()
+    match_controller = MatchController()
 
-    for match in matches_data:
-        match_controller.add_match(match['id'], match['home_team'], match['away_team'], match['date'], match['stadium'])
+    for equipo in equipos:
+        team_controller.add_team(equipo['name'], equipo['fifa_code'], equipo['group'])
+
+    for estadio in estadios:
+        stadium_controller.add_stadium(estadio['name'], estadio['location'])
+
+    for partido in partidos:
+        match_controller.add_match(
+            team_controller.get_team(partido['home_team']),
+            team_controller.get_team(partido['away_team']),
+            partido['date'],
+            stadium_controller.get_stadium(partido['stadium'])
+        )
+
+    print("Datos iniciales cargados desde la API.")
