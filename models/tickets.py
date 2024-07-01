@@ -3,14 +3,13 @@ from teams import load_teams_from_api
 from stadiums import load_stadiums_from_api
 
 class Ticket:
-    def __init__(self, client_name, cedula, age, match, ticket_type, seat_number, price):
-        self.client_name = client_name
-        self.cedula = cedula
-        self.age = age
-        self.match = match
-        self.ticket_type = ticket_type
-        self.seat_number = seat_number
-        self.price = price
+    def __init__(self, cliente, partido, tipo_entrada, asiento, precio):
+        self.cliente = cliente
+        self.partido = partido
+        self.tipo_entrada = tipo_entrada
+        self.asiento = asiento
+        self.precio = precio
+
 
     def calculate_ticket_price(self):
         base_price = 35 if self.ticket_type == 'General' else 75

@@ -2,16 +2,16 @@
 
 from models.teams import Team
 
+from models.teams import Team
+
 class TeamController:
     def __init__(self):
         self.teams = []
 
-    def add_team(self, name, fifa_code, group):
-        team = Team(name, fifa_code, group)
-        self.teams.append(team)
+    def agregar_equipo(self, nombre, codigo_fifa, grupo):
+        equipo = Team(nombre, codigo_fifa, grupo)
+        self.teams.append(equipo)
 
-    def get_team(self, name):
-        for team in self.teams:
-            if team.name == name:
-                return team
-        return None
+    def obtener_equipos(self):
+        return self.teams
+

@@ -1,7 +1,8 @@
 
 class Match:
-    def __init__(self, home_team, away_team, date, stadium):
-        self.home_team = home_team
-        self.away_team = away_team
-        self.date = date
-        self.stadium = stadium
+    def __init__(self, equipo_local, equipo_visitante, fecha_hora, estadio):
+        self.equipo_local = equipo_local
+        self.equipo_visitante = equipo_visitante
+        self.fecha_hora = fecha_hora
+        self.estadio = estadio
+

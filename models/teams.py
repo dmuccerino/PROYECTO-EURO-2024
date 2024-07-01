@@ -1,6 +1,7 @@
 
 class Team:
-    def __init__(self, name, fifa_code, group):
-        self.name = name
-        self.fifa_code = fifa_code
-        self.group = group
+    def __init__(self, nombre, codigo_fifa, grupo):
+        self.nombre = nombre
+        self.codigo_fifa = codigo_fifa
+        self.grupo = grupo
+

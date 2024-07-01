@@ -9,7 +9,7 @@ sys.path.append(os.path.abspath(''))
 from utils.api_utils import cargar_datos_iniciales
 
 def main():
-    cargar_datos_iniciales()
+    equipos, estadios, partidos = cargar_datos_iniciales()
     # Aquí puedes continuar con la lógica principal de tu aplicación
     print("Datos iniciales cargados correctamente.")
 
