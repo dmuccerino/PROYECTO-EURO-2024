@@ -1,7 +1,9 @@
 
 class Restaurant:
-    def __init__(self, nombre, clasificacion, tipo, precio):
+    def __init__(self, nombre):
         self.nombre = nombre
-        self.clasificacion = clasificacion
-        self.tipo = tipo
-        self.precio = precio
+        self.productos = []
+
+    def agregar_producto(self, producto):
+        self.productos.append(producto)
+
