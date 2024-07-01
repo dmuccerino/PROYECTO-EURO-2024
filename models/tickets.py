@@ -9,9 +9,8 @@ class Ticket:
         self.utilizado = False
 
 tickets_emitidos = [
-    Ticket("ABCDE12345"),
-    Ticket("FGHIJ67890"),
-    Ticket("KLMNO54321")
+    Ticket("Juan Pérez", "1234567890", "Equipo A vs Equipo B", "VIP", 100.00),
+    Ticket("María Gómez", "0987654321", "Equipo C vs Equipo D", "General", 50.00),
 ]
 
 # Función para validar la autenticidad del ticket
