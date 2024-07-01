@@ -1,52 +1,57 @@
 
-from models.product import Producto
+import json
 
-# Lista de productos disponibles en el restaurante (puedes cargar desde API o archivo)
-productos_disponibles = [
-    Producto("Hamburguesa", "alimento", 12.50, es_empaque=True),
-    Producto("Pizza", "alimento", 15.00, es_empaque=True),
-    Producto("Cerveza", "bebida", 5.00, es_alcoholica=True),
-    Producto("Refresco", "bebida", 3.50),
-]
+# Función para cargar productos desde el archivo JSON
+def load_products():
+    with open('data/products.json', 'r', encoding='utf-8') as file:
+        products = json.load(file)
+    return products
 
 # Función para buscar productos por nombre
-def buscar_producto_por_nombre(nombre):
-    for producto in productos_disponibles:
-        if producto.nombre.lower() == nombre.lower():
-            return producto
-    return None
+def find_product_by_name(name):
+    products = load_products()
+    found_products = [p for p in products if p['name'].lower() == name.lower()]
+    return found_products
 
 # Función para buscar productos por tipo (alimento o bebida)
-def buscar_productos_por_tipo(tipo):
-    resultados = []
-    for producto in productos_disponibles:
-        if producto.tipo == tipo:
-            resultados.append(producto)
-    return resultados
+def find_products_by_type(product_type):
+    products = load_products()
+    found_products = [p for p in products if p['type'].lower() == product_type.lower()]
+    return found_products
 
 # Función para buscar productos por rango de precio
-def buscar_productos_por_rango_de_precio(min_precio, max_precio):
-    resultados = []
-    for producto in productos_disponibles:
-        if min_precio <= producto.precio <= max_precio:
-            resultados.append(producto)
-    return resultados
+def find_products_by_price_range(min_price, max_price):
+    products = load_products()
+    found_products = [p for p in products if min_price <= p['price'] <= max_price]
+    return found_products
 
-# Función para realizar la venta de productos
-def realizar_venta(producto, cliente):
-    # Verificar edad del cliente para bebidas alcohólicas
-    if producto.tipo == 'bebida' and producto.es_alcoholica and cliente.edad < 18:
-        print("El cliente es menor de 18 años. No puede comprar bebidas alcohólicas.")
-        return False
+# Función para realizar la venta de productos de restaurante
+def sell_product(customer_id, product_name, is_alcoholic, is_underage):
+    products = load_products()
+    product = next((p for p in products if p['name'].lower() == product_name.lower()), None)
+    if product:
+        if product['type'].lower() == 'bebida' and is_alcoholic and is_underage:
+            return "No se puede vender bebidas alcohólicas a menores de edad."
+        
+        # Aplicación de descuento si la cédula es un número perfecto
+        discount_percentage = 0.15 if is_perfect_number(customer_id) else 0
+        discount_amount = product['price'] * discount_percentage
+        
+        total_price = product['price'] + (product['price'] * 0.16) - discount_amount
+        
+        # Actualizar inventario (simulado)
+        product['stock'] -= 1
+        
+        return {
+            'product_name': product['name'],
+            'total_price': total_price,
+            'discount_amount': discount_amount,
+            'is_discounted': discount_amount > 0
+        }
+    else:
+        return "Producto no encontrado."
 
-    # Calcular precio final (con IVA)
-    producto.aplicar_iva()
-    costo_total = producto.precio
-
-    # Mostrar resumen de la compra
-    print(f"Producto: {producto}")
-    print(f"Costo total (con IVA): ${costo_total:.2f}")
-
-    # Aquí se podría integrar la lógica de pago exitoso y actualización de inventario
-
-    return True
+# Función auxiliar para verificar si un número es perfecto
+def is_perfect_number(number):
+    sum_divisors = sum(i for i in range(1, number) if number % i == 0)
+    return sum_divisors == number
